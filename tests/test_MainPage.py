@@ -1,6 +1,5 @@
 import time
 import pytest
-from pages.MainPage import MainPage
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,28 +12,17 @@ from selenium.webdriver.support import expected_conditions as EC
 #  테스트 케이스 6. 최근 본 상품 기능
 
 @pytest.mark.skip()
-def test_open_main_page(CreateDriver):
+def test_open_main_page(mainPage):
     try:
-        mainPage = MainPage(CreateDriver)
-        
-        mainPage.openMainPage()      
-        time.sleep(3)
-        
         WebDriverWait(mainPage.driver, 10).until(EC.url_contains("coupang.com"))
         assert "coupang.com" in mainPage.driver.current_url
     except Exception as e:
         print(f"[❗] {e}")
         
 @pytest.mark.skip()
-def test_search_product(CreateDriver): # 쿠팡 상품 검색 기능
-    productName = "아이폰"
-    
+@pytest.mark.parametrize("productName", ["노트북"])
+def test_search_product(mainPage, productName): # 쿠팡 상품 검색 기능
     try:
-        mainPage = MainPage(CreateDriver)
-        
-        mainPage.openMainPage()       
-        time.sleep(3)
-        
         value = mainPage.searchProduct(productName)
         time.sleep(3)
         
@@ -43,13 +31,8 @@ def test_search_product(CreateDriver): # 쿠팡 상품 검색 기능
         print(f"[❗] {e}")
 
 @pytest.mark.skip()    
-def test_open_cart_page(CreateDriver): # 장바구니 페이지 이동
+def test_open_cart_page(mainPage): # 장바구니 페이지 이동
     try:
-        mainPage = MainPage(CreateDriver)
-        
-        mainPage.openMainPage()
-        time.sleep(3)
-        
         mainPage.openCartPage()
         time.sleep(3)
         
@@ -57,14 +40,9 @@ def test_open_cart_page(CreateDriver): # 장바구니 페이지 이동
         assert "cartView.pang" in mainPage.driver.current_url
     except Exception as e:
         print(f"[❗] {e}")
-        
-def test_open_sellerSpecial_page(CreateDriver):
+  
+def test_open_sellerSpecial_page(mainPage):
     try:
-        mainPage = MainPage(CreateDriver)
-        
-        mainPage.openMainPage()
-        time.sleep(3)
-        
         mainPage.openSellerSpecialPage()
         time.sleep(3)
         

@@ -1,7 +1,10 @@
+import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+
+from pages.MainPage import MainPage
 
 @pytest.fixture(scope="function")
 def CreateDriver():
@@ -39,3 +42,15 @@ def CreateDriver():
     print("\n🛠️ WebDriver 종료!")
     
     driver.quit()
+    
+@pytest.fixture(scope="function")
+def mainPage(CreateDriver):
+    page = MainPage(CreateDriver)
+    print("📦 MainPage 클래스 객체 생성!")
+    
+    page.openMainPage()   
+    print("🌍 쿠팡 메인 페이지 오픈!")
+    
+    time.sleep(3)
+    
+    return page
