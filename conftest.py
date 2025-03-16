@@ -21,16 +21,15 @@ def CreateDriver():
     #    - excludeSwitches, useAutomationExtension
     chromeOptions.add_experimental_option("excludeSwitches", ["enable-automation"])
     chromeOptions.add_experimental_option("useAutomationExtension", False)
-
     # 혹은 다음 방식으로 Blink 특징을 비활성화할 수도 있으나
     # "AutomationControlled" 자체가 표기되지 않도록 한다.
     chromeOptions.add_argument("--disable-blink-features=AutomationControlled")
-
     # 6) Sandbox나 DevShm 사이즈 문제 우회 (리눅스 환경에서 발생 가능)
     chromeOptions.add_argument("--no-sandbox")
     chromeOptions.add_argument("--disable-dev-shm-usage")
     
     driver = webdriver.Chrome(service=chromeService, options=chromeOptions)
+    
     driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": {"Referer": "https://www.coupang.com/"}})
     
     print("🛠️ WebDriver 생성!")
