@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 from pages.MainPage import MainPage
+from pages.CartPage import CartPage
 
 @pytest.fixture(scope="function")
 def CreateDriver():
@@ -45,12 +46,24 @@ def CreateDriver():
     
 @pytest.fixture(scope="function")
 def mainPage(CreateDriver):
-    page = MainPage(CreateDriver)
+    mainPage = MainPage(CreateDriver)
     print("📦 MainPage 클래스 객체 생성!")
     
-    page.openMainPage()   
+    mainPage.openMainPage()   
     print("🌍 쿠팡 메인 페이지 오픈!")
     
     time.sleep(3)
     
-    return page
+    return mainPage
+
+@pytest.fixture(scope="function")
+def cartPage(CreateDriver):
+    cartPage = CartPage(CreateDriver)
+    print("📦 CartPage 클래스 객체 생성!")
+    
+    cartPage.openProductPage()
+    print("🌍 상품 페이지 오픈!")
+    
+    time.sleep(3)
+    
+    return cartPage
