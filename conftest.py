@@ -9,7 +9,6 @@ from pages.CartPage import CartPage
 
 @pytest.fixture(scope="function")
 def CreateDriver():
-    
     chromeService = Service()
     chromeOptions = Options()
     
@@ -17,6 +16,7 @@ def CreateDriver():
     
     # 1) User-Agent 변경
     chromeOptions.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/91.0")
+    # chromeOptions.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
     # 2) SSL 인증서 에러 무시
     chromeOptions.add_argument("--ignore-certificate-errors")
     chromeOptions.add_argument("--ignore-ssl-errors")
@@ -35,6 +35,8 @@ def CreateDriver():
     driver = webdriver.Chrome(service=chromeService, options=chromeOptions)
     
     driver.execute_cdp_cmd("Network.setExtraHTTPHeaders", {"headers": {"Referer": "https://www.coupang.com/"}})
+    driver.execute_cdp_cmd("Network.clearBrowserCache", {})
+    driver.delete_all_cookies()
     
     print("🛠️ WebDriver 생성!")
     
@@ -59,10 +61,10 @@ def mainPage(CreateDriver):
 @pytest.fixture(scope="function")
 def cartPage(CreateDriver):
     cartPage = CartPage(CreateDriver)
-    print("📦 CartPage 클래스 객체 생성!")
+    print("📦 cartPage 클래스 객체 생성!")
     
-    cartPage.openProductPage()
-    print("🌍 상품 페이지 오픈!")
+    cartPage.openMainPage()   
+    print("🌍 쿠팡 메인 페이지 오픈!")
     
     time.sleep(3)
     
