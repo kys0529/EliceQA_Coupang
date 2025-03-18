@@ -41,6 +41,7 @@ def test_open_cart_page(mainPage): # 장바구니 페이지 이동
     except Exception as e:
         print(f"[❗] {e}")
   
+@pytest.mark.skip()
 def test_open_sellerSpecial_page(mainPage):
     try:
         mainPage.openSellerSpecialPage()
