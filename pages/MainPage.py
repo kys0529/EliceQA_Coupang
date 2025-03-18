@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class MainPage():
-    URL = "https://www.coupang.com/"
+    MAINPAGE_URL = "https://www.coupang.com/"
     SEARCH_INPUT_ID = "headerSearchKeyword"
     SEARCH_BUTTON_ID = "headerSearchBtn"
     CART_BUTTON_CLASS = "mycart-preview-module"
@@ -14,7 +14,7 @@ class MainPage():
         self.driver = driver
     
     def openMainPage(self):
-        self.driver.get(self.URL)
+        self.driver.get(self.MAINPAGE_URL)
         
     def searchProduct(self, productName):
         searchInputBox = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, self.SEARCH_INPUT_ID)))
